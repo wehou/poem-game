@@ -424,20 +424,24 @@
   <!-- 随机练习模式 -->
   <div class="quiz-area" id="quizArea">
     <div class="quiz-card">
-      <div id="quizInputArea">
-        <div class="quiz-answer-area">
-          <input type="text" class="quiz-input" id="quizInput" placeholder="请输入答案..." autocomplete="off">
-          <div class="quiz-buttons">
-            <button class="quiz-btn quiz-btn-secondary" onclick="showAnswer()">💡 提示</button>
-            <button class="quiz-btn quiz-btn-primary" onclick="checkAnswer()">✓ 提交</button>
-            <button class="quiz-btn quiz-btn-secondary" onclick="nextQuiz()">→ 下一题</button>
-          </div>
-        </div>
-      </div>
       <div class="quiz-hint">
         <div class="label" id="quizLabel">请根据上句，背诵下句</div>
-        <div class="content" id="quizContent"></div>
-        <div class="pinyin" id="quizPinyin"></div>
+      </div>
+      <div id="quizBodyArea">
+        <div id="quizInputArea">
+          <div class="quiz-answer-area">
+            <input type="text" class="quiz-input" id="quizInput" placeholder="请输入答案..." autocomplete="off">
+            <div class="quiz-buttons">
+              <button class="quiz-btn quiz-btn-secondary" onclick="showAnswer()">💡 提示</button>
+              <button class="quiz-btn quiz-btn-primary" onclick="checkAnswer()">✓ 提交</button>
+              <button class="quiz-btn quiz-btn-secondary" onclick="nextQuiz()">→ 下一题</button>
+            </div>
+          </div>
+        </div>
+        <div id="quizHintContent">
+          <div class="content" id="quizContent"></div>
+          <div class="pinyin" id="quizPinyin"></div>
+        </div>
       </div>
       <div class="quiz-result" id="quizResult" style="display:none;"></div>
       <div class="quiz-stats">
@@ -832,18 +836,16 @@ function nextQuiz() {
   document.getElementById('quizLabel').textContent = label;
   document.getElementById('quizContent').innerHTML = `「${currentQuiz.poemTitle}」<br>${currentQuiz.hint}`;
   document.getElementById('quizPinyin').textContent = currentQuiz.hintPinyin || '';
-  // 背诵上句时，输入框在提示句上方；背诵下句时，输入框在提示句下方
+  // 背诵上句时：输入框 → 提示句；背诵下句时：提示句 → 输入框
   const inputArea = document.getElementById('quizInputArea');
-  const hintArea = document.querySelector('.quiz-hint');
-  const resultArea = document.getElementById('quizResult');
-  // 先将输入框移到结果区域后面（临时位置），确保后续 insertBefore 能正确生效
-  resultArea.parentNode.insertBefore(inputArea, resultArea);
+  const hintContent = document.getElementById('quizHintContent');
+  const bodyArea = document.getElementById('quizBodyArea');
+  // 先移到末尾确保 insertBefore 能正确生效
+  bodyArea.appendChild(inputArea);
   if (isPrev) {
-    // 背诵上句：输入框 → 提示句
-    hintArea.parentNode.insertBefore(inputArea, hintArea);
+    bodyArea.insertBefore(inputArea, hintContent);
   } else {
-    // 背诵下句：提示句 → 输入框
-    hintArea.parentNode.insertBefore(inputArea, hintArea.nextSibling);
+    bodyArea.appendChild(inputArea);
   }
   document.getElementById('quizInput').focus();
 }
