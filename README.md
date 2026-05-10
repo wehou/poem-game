@@ -50,7 +50,7 @@ An interactive game to help third-grade students memorize required poems.
 
 ## 在线演示 / Demo
 
-直接打开 `poem-game.html`[在线演示](https://github.com/wehou/poem-game) 即可在浏览器中运行。
+直接打开 `poem-game.html`[在线演示](https://wehou.github.io/poem-game) 即可在浏览器中运行。
 
 ## 许可证 / License
 
