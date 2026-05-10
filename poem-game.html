@@ -98,6 +98,13 @@
   .quiz-hint .label { font-size: 16px; color: #a0522d; margin-bottom: 10px; }
   .quiz-hint .content { font-size: 28px; line-height: 1.8; }
   .quiz-hint .pinyin { font-size: 16px; color: #888; margin-top: 8px; }
+  .quiz-poem-title { font-size: 18px; color: #8b4513; font-weight: bold; margin-top: 6px; }
+  .quiz-hint-content {
+    text-align: center; font-size: 20px; color: #8b4513;
+    padding: 20px; background: rgba(139,69,19,0.05); border-radius: 12px;
+  }
+  .hint-content { font-size: 28px; line-height: 1.8; }
+  .hint-pinyin { font-size: 16px; color: #888; margin-top: 8px; }
   .quiz-answer-area { margin-top: 20px; }
   .quiz-input {
     width: 100%; padding: 16px 20px; font-size: 22px;
@@ -426,6 +433,7 @@
     <div class="quiz-card">
       <div class="quiz-hint">
         <div class="label" id="quizLabel">请根据上句，背诵下句</div>
+        <div class="quiz-poem-title" id="quizPoemTitle"></div>
       </div>
       <div id="quizBodyArea">
         <div id="quizInputArea">
@@ -438,9 +446,9 @@
             </div>
           </div>
         </div>
-        <div id="quizHintContent">
-          <div class="content" id="quizContent"></div>
-          <div class="pinyin" id="quizPinyin"></div>
+        <div id="quizHintContent" class="quiz-hint-content">
+          <div class="hint-content" id="quizContent"></div>
+          <div class="hint-pinyin" id="quizPinyin"></div>
         </div>
       </div>
       <div class="quiz-result" id="quizResult" style="display:none;"></div>
@@ -834,7 +842,8 @@ function nextQuiz() {
   const isPrev = currentQuiz.type === 'prev';
   const label = isPrev ? '请根据下句，背诵上句' : '请根据上句，背诵下句';
   document.getElementById('quizLabel').textContent = label;
-  document.getElementById('quizContent').innerHTML = `「${currentQuiz.poemTitle}」<br>${currentQuiz.hint}`;
+  document.getElementById('quizPoemTitle').textContent = `「${currentQuiz.poemTitle}」`;
+  document.getElementById('quizContent').innerHTML = currentQuiz.hint;
   document.getElementById('quizPinyin').textContent = currentQuiz.hintPinyin || '';
   // 背诵上句时：输入框 → 提示句；背诵下句时：提示句 → 输入框
   const inputArea = document.getElementById('quizInputArea');
