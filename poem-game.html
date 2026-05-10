@@ -439,16 +439,16 @@
         <div id="quizInputArea">
           <div class="quiz-answer-area">
             <input type="text" class="quiz-input" id="quizInput" placeholder="请输入答案..." autocomplete="off">
-            <div class="quiz-buttons">
-              <button class="quiz-btn quiz-btn-secondary" onclick="showAnswer()">💡 提示</button>
-              <button class="quiz-btn quiz-btn-primary" onclick="checkAnswer()">✓ 提交</button>
-              <button class="quiz-btn quiz-btn-secondary" onclick="nextQuiz()">→ 下一题</button>
-            </div>
           </div>
         </div>
         <div id="quizHintContent" class="quiz-hint-content">
           <div class="hint-content" id="quizContent"></div>
           <div class="hint-pinyin" id="quizPinyin"></div>
+        </div>
+        <div class="quiz-buttons">
+          <button class="quiz-btn quiz-btn-secondary" onclick="showAnswer()">💡 提示</button>
+          <button class="quiz-btn quiz-btn-primary" onclick="checkAnswer()">✓ 提交</button>
+          <button class="quiz-btn quiz-btn-secondary" onclick="nextQuiz()">→ 下一题</button>
         </div>
       </div>
       <div class="quiz-result" id="quizResult" style="display:none;"></div>
