@@ -845,16 +845,15 @@ function nextQuiz() {
   document.getElementById('quizPoemTitle').textContent = `「${currentQuiz.poemTitle}」`;
   document.getElementById('quizContent').innerHTML = currentQuiz.hint;
   document.getElementById('quizPinyin').textContent = currentQuiz.hintPinyin || '';
-  // 背诵上句时：输入框 → 提示句；背诵下句时：提示句 → 输入框
+  // 背诵上句时：输入框 → 提示句 → 按钮；背诵下句时：提示句 → 输入框 → 按钮
   const inputArea = document.getElementById('quizInputArea');
   const hintContent = document.getElementById('quizHintContent');
   const bodyArea = document.getElementById('quizBodyArea');
-  // 先移到末尾确保 insertBefore 能正确生效
-  bodyArea.appendChild(inputArea);
+  const buttons = document.querySelector('#quizBodyArea .quiz-buttons');
+  // 先将输入框移到按钮前面（临时位置），确保 insertBefore 能正确生效
+  bodyArea.insertBefore(inputArea, buttons);
   if (isPrev) {
     bodyArea.insertBefore(inputArea, hintContent);
-  } else {
-    bodyArea.appendChild(inputArea);
   }
   document.getElementById('quizInput').focus();
 }
