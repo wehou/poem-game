@@ -424,18 +424,20 @@
   <!-- 随机练习模式 -->
   <div class="quiz-area" id="quizArea">
     <div class="quiz-card">
+      <div id="quizInputArea">
+        <div class="quiz-answer-area">
+          <input type="text" class="quiz-input" id="quizInput" placeholder="请输入答案..." autocomplete="off">
+          <div class="quiz-buttons">
+            <button class="quiz-btn quiz-btn-secondary" onclick="showAnswer()">💡 提示</button>
+            <button class="quiz-btn quiz-btn-primary" onclick="checkAnswer()">✓ 提交</button>
+            <button class="quiz-btn quiz-btn-secondary" onclick="nextQuiz()">→ 下一题</button>
+          </div>
+        </div>
+      </div>
       <div class="quiz-hint">
         <div class="label" id="quizLabel">请根据上句，背诵下句</div>
         <div class="content" id="quizContent"></div>
         <div class="pinyin" id="quizPinyin"></div>
-      </div>
-      <div class="quiz-answer-area">
-        <input type="text" class="quiz-input" id="quizInput" placeholder="请输入答案..." autocomplete="off">
-        <div class="quiz-buttons">
-          <button class="quiz-btn quiz-btn-secondary" onclick="showAnswer()">💡 提示</button>
-          <button class="quiz-btn quiz-btn-primary" onclick="checkAnswer()">✓ 提交</button>
-          <button class="quiz-btn quiz-btn-secondary" onclick="nextQuiz()">→ 下一题</button>
-        </div>
       </div>
       <div class="quiz-result" id="quizResult" style="display:none;"></div>
       <div class="quiz-stats">
@@ -825,10 +827,19 @@ function nextQuiz() {
   currentQuiz = getWeightedRandomQuestion();
   document.getElementById('quizResult').style.display = 'none';
   document.getElementById('quizInput').value = '';
-  const label = currentQuiz.type === 'next' ? '请根据上句，背诵下句' : '请根据下句，背诵上句';
+  const isPrev = currentQuiz.type === 'prev';
+  const label = isPrev ? '请根据下句，背诵上句' : '请根据上句，背诵下句';
   document.getElementById('quizLabel').textContent = label;
   document.getElementById('quizContent').innerHTML = `「${currentQuiz.poemTitle}」<br>${currentQuiz.hint}`;
   document.getElementById('quizPinyin').textContent = currentQuiz.hintPinyin || '';
+  // 背诵上句时，输入框在提示句上方；背诵下句时，输入框在提示句下方
+  const inputArea = document.getElementById('quizInputArea');
+  const hintArea = document.querySelector('.quiz-hint');
+  if (isPrev) {
+    inputArea.parentNode.insertBefore(inputArea, hintArea);
+  } else {
+    hintArea.parentNode.insertBefore(inputArea, hintArea.nextSibling);
+  }
   document.getElementById('quizInput').focus();
 }
 
